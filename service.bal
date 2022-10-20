@@ -13,7 +13,7 @@ configurable string host = ?;
 type output record {
     boolean valid;
     boolean isGuilty?;
-    string? charges?;
+    string charges?;
 };
 
 type Person record {
@@ -52,7 +52,7 @@ service / on new http:Listener(9090) {
                 output result={
                     valid: true,
                     isGuilty: true,
-                    charges: person.charges
+                    charges:<string>person.charges
                 };
                 log:printInfo(result.toBalString());
                 return result;
