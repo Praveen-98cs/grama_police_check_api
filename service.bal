@@ -23,14 +23,12 @@ type Person record {
     string charges?;
 };
 
-mysql:Client mysqlEp = check new (host = host, user = user, password = password, database = database, port = port);
+final mysql:Client mysqlEp = check new (host = host, user = user, password = password, database = database, port = port);
 
-# A service representing a network-accessible API
-# bound to port `9090`.
 service / on new http:Listener(9090) {
 
     //function for checking the police records by nic
-    resource function get policeCheck/[string nic]() returns output|error? {
+    isolated resource function get policeCheck/[string nic]() returns output|error? {
         Person|error queryRowResponse=mysqlEp->queryRow(`select * from police_details where nic=${nic.trim()}`);
 
         if queryRowResponse is error{
