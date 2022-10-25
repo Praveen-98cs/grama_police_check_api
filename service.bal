@@ -35,28 +35,27 @@ service / on new http:Listener(9090) {
             output result={
                 valid: false
             };
+
             log:printInfo("Invalid NIC");
             return result;
         }else{
-            Person person=queryRowResponse;
-            if person.isGuilty==0{
+            if queryRowResponse.isGuilty==0{
                 output result={
                     valid: true,
                     isGuilty: false
                 };
-                log:printInfo(result.toBalString());
+                log:printInfo(queryRowResponse.toBalString());
                 return result;
-            }else if person.isGuilty==1 {
+            }else if queryRowResponse.isGuilty==1 {
                 output result={
                     valid: true,
                     isGuilty: true,
-                    charges:<string>person.charges
+                    charges:<string>queryRowResponse.charges
                 };
-                log:printInfo(result.toBalString());
+                log:printInfo(queryRowResponse.toBalString());
                 return result;
             }
 
-        
         }
         return;
     }
